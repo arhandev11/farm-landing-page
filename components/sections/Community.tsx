@@ -1,5 +1,11 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { communityPrograms, siteConfig } from "@/lib/content";
+import { motion } from "framer-motion";
 import { GraduationCap, Handshake, Heart, LucideIcon, MessageSquare, Shield, Users } from "lucide-react";
+import Image from "next/image";
 
 const iconMap: Record<string, LucideIcon> = {
   GraduationCap,
@@ -46,94 +52,105 @@ export default function Community() {
         </div>
 
         {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-          {/* Image Placeholder */}
-          <div className="relative">
-            <div className="aspect-[4/3] bg-gradient-to-br from-ocean-blue/10 to-teal/10 rounded-3xl flex items-center justify-center border-2 border-dashed border-ocean-blue/30">
-              <div className="text-center p-8">
-                <div className="w-24 h-24 mx-auto mb-4 bg-ocean-blue/20 rounded-full flex items-center justify-center">
-                  <Users className="text-ocean-blue" size={48} />
-                </div>
-                <p className="text-gray-500 text-sm">community-hero.png</p>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl">
+              <Image
+                src="/images/community-hero.png"
+                alt="Komunitas Petambak Indonesia"
+                width={800}
+                height={600}
+                className="object-cover w-full h-full hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-8 right-8 text-white">
+                 <p className="font-bold text-xl">Grow Together</p>
+                 <p className="text-sm opacity-90">Tumbuh bersama komunitas</p>
               </div>
             </div>
             {/* Decorative */}
-            <div className="absolute -z-10 -bottom-4 -left-4 w-full h-full bg-teal/10 rounded-3xl" />
-          </div>
+            <div className="absolute -z-10 -bottom-6 -left-6 w-full h-full bg-teal/10 rounded-[2rem] border border-teal/20" />
+            <div className="absolute -z-20 top-10 right-10 w-32 h-32 bg-ocean-blue/20 rounded-full blur-2xl" />
+          </motion.div>
 
           {/* Programs */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <h3 className="text-2xl font-bold text-navy mb-6">Program Komunitas</h3>
             <div className="space-y-4">
-              {communityPrograms.map((program) => {
+              {communityPrograms.map((program, index) => {
                 const IconComponent = iconMap[program.icon];
                 return (
-                  <div
-                    key={program.id}
-                    className="flex gap-4 p-5 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100"
-                  >
-                    <div className="w-14 h-14 bg-gradient-to-br from-ocean-blue to-teal rounded-xl flex items-center justify-center shrink-0">
-                      {IconComponent && <IconComponent className="text-white" size={28} />}
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-navy mb-1">{program.title}</h4>
-                      <p className="text-gray-600 text-sm">{program.description}</p>
-                    </div>
-                  </div>
+                  <Card key={program.id} className="border-gray-100 hover:border-ocean-blue/30 shadow-sm hover:shadow-md transition-all duration-300">
+                    <CardContent className="p-5 flex gap-4 items-start">
+                      <div className="w-12 h-12 bg-gradient-to-br from-ocean-blue/10 to-teal/10 rounded-xl flex items-center justify-center shrink-0">
+                        {IconComponent && <IconComponent className="text-ocean-blue" size={24} />}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-navy mb-1 text-lg">{program.title}</h4>
+                        <p className="text-gray-600 text-sm leading-relaxed">{program.description}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
                 );
               })}
             </div>
 
             {/* CTA */}
-            <a
-              href={whatsappGroupUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2 bg-ocean-blue hover:bg-ocean-blue/90 text-white px-6 py-3 rounded-full font-semibold transition-all"
-            >
-              Gabung Komunitas
-            </a>
-          </div>
+            <div className="mt-8">
+               <Button asChild size="lg" className="rounded-full bg-ocean-blue hover:bg-ocean-blue/90 shadow-lg px-8">
+                <a
+                  href={whatsappGroupUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <MessageSquare size={18} />
+                  Gabung Komunitas (WhatsApp)
+                </a>
+               </Button>
+            </div>
+          </motion.div>
         </div>
 
         {/* Community Values */}
-        <div className="bg-gradient-to-r from-ocean-blue to-teal rounded-3xl p-8 md:p-12 text-white">
-          <h3 className="text-2xl font-bold text-center mb-10">Nilai-Nilai Komunitas Kami</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {communityValues.map((value) => {
+        <motion.div
+           initial={{ opacity: 0, y: 30 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           transition={{ duration: 0.8 }}
+           className="bg-gradient-to-r from-ocean-blue to-teal rounded-[2.5rem] p-8 md:p-16 text-white text-center shadow-xl relative overflow-hidden"
+        >
+          {/* Background overlay */}
+          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay" />
+          
+          <h3 className="text-2xl md:text-3xl font-bold mb-12 relative z-10">Nilai-Nilai Komunitas Kami</h3>
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12 relative z-10">
+            {communityValues.map((value, i) => {
               const IconComponent = value.icon;
               return (
-                <div key={value.title} className="text-center">
-                  <div className="w-16 h-16 mx-auto bg-white/20 rounded-2xl flex items-center justify-center mb-4">
-                    <IconComponent size={32} />
+                <div key={value.title} className="group">
+                  <div className="w-20 h-20 mx-auto bg-white/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/20">
+                    <IconComponent size={36} />
                   </div>
-                  <h4 className="font-bold text-lg mb-2">{value.title}</h4>
-                  <p className="text-white/80 text-sm">{value.description}</p>
+                  <h4 className="font-bold text-xl mb-3">{value.title}</h4>
+                  <p className="text-white/80 text-sm md:text-base leading-relaxed">{value.description}</p>
                 </div>
               );
             })}
           </div>
-        </div>
-
-        {/* Activity Gallery Placeholder */}
-        <div className="mt-16">
-          <h3 className="text-2xl font-bold text-navy text-center mb-8">Kegiatan Komunitas</h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            {["Training Session", "Sharing Session", "Field Visit"].map((activity, index) => (
-              <div
-                key={activity}
-                className="aspect-video bg-gradient-to-br from-ocean-blue/5 to-teal/5 rounded-2xl flex items-center justify-center border border-gray-200"
-              >
-                <div className="text-center p-4">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-ocean-blue/20 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">{["📚", "💬", "🌾"][index]}</span>
-                  </div>
-                  <p className="text-gray-500 text-sm">{activity}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

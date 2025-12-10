@@ -1,22 +1,43 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { navLinks, siteConfig } from "@/lib/content";
-import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 20);
+  });
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        isScrolled
+          ? "bg-white/90 backdrop-blur-md shadow-md py-2"
+          : "bg-transparent py-4 md:py-6"
+      )}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-ocean-blue to-teal rounded-lg flex items-center justify-center">
+          <a href="#" className="flex items-center gap-2 group">
+            <div className="w-10 h-10 bg-gradient-to-br from-ocean-blue to-teal rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <span className="text-white font-bold text-lg">TF</span>
             </div>
-            <span className="text-xl font-bold text-navy">{siteConfig.name}</span>
+            <span className={cn("text-xl font-bold transition-colors", isScrolled ? "text-navy" : "text-navy")}>
+              {siteConfig.name}
+            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -25,7 +46,10 @@ export default function Header() {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-gray-600 hover:text-ocean-blue transition-colors font-medium"
+                className={cn(
+                  "font-medium transition-colors hover:text-ocean-blue",
+                  isScrolled ? "text-gray-600" : "text-gray-700"
+                )}
               >
                 {link.name}
               </a>
@@ -34,48 +58,53 @@ export default function Header() {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <a
-              href="#kontak"
-              className="bg-ocean-blue hover:bg-ocean-blue/90 text-white px-6 py-2.5 rounded-full font-semibold transition-colors"
+            <Button
+              asChild
+              className="bg-ocean-blue hover:bg-ocean-blue/90 text-white rounded-full px-6"
             >
-              Gabung Sekarang
-            </a>
+              <a href="#kontak">Gabung Sekarang</a>
+            </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-gray-600"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile Menu */}
+          <div className="lg:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-gray-700">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <SheetHeader className="text-left">
+                   <SheetTitle className="flex items-center gap-2 mb-6">
+                    <div className="w-8 h-8 bg-gradient-to-br from-ocean-blue to-teal rounded-lg flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">TF</span>
+                    </div>
+                    <span className="text-lg font-bold text-navy">{siteConfig.name}</span>
+                  </SheetTitle>
+                </SheetHeader>
+                <nav className="flex flex-col gap-4 mt-4">
+                  {navLinks.map((link) => (
+                    <SheetClose asChild key={link.name}>
+                      <a
+                        href={link.href}
+                        className="text-lg font-medium text-gray-700 hover:text-ocean-blue transition-colors py-2 border-b border-gray-100"
+                      >
+                        {link.name}
+                      </a>
+                    </SheetClose>
+                  ))}
+                  <SheetClose asChild>
+                    <Button asChild className="mt-4 bg-ocean-blue hover:bg-ocean-blue/90 w-full rounded-full">
+                      <a href="#kontak">Gabung Sekarang</a>
+                    </Button>
+                  </SheetClose>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="lg:hidden bg-white border-t">
-          <nav className="flex flex-col px-4 py-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-gray-600 hover:text-ocean-blue py-3 border-b border-gray-100 font-medium"
-              >
-                {link.name}
-              </a>
-            ))}
-            <a
-              href="#kontak"
-              onClick={() => setIsMenuOpen(false)}
-              className="mt-4 bg-ocean-blue text-white text-center px-6 py-3 rounded-full font-semibold"
-            >
-              Gabung Sekarang
-            </a>
-          </nav>
-        </div>
-      )}
-    </header>
+    </motion.header>
   );
 }
