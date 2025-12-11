@@ -7,13 +7,20 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { faqData } from "@/lib/content";
+import { FAQ as FAQType } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { HelpCircle } from "lucide-react";
 import { useState } from "react";
 
-export default function FAQ() {
+interface FAQProps {
+  faqData: {
+    petambak: FAQType[];
+    pembeli: FAQType[];
+  };
+}
+
+export default function FAQ({ faqData }: FAQProps) {
   const [activeTab, setActiveTab] = useState<"petambak" | "pembeli">("petambak");
 
   const currentFaqs = faqData[activeTab];

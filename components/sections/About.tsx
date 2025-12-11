@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { coreValues } from "@/lib/content";
+import { CoreValue } from "@/lib/queries";
 import { motion } from "framer-motion";
 import { Eye, Leaf, LucideIcon, Scale, Users } from "lucide-react";
 import Image from "next/image";
@@ -29,7 +29,11 @@ const staggerContainer = {
   },
 };
 
-export default function About() {
+interface AboutProps {
+  coreValues: CoreValue[];
+}
+
+export default function About({ coreValues }: AboutProps) {
   return (
     <section id="tentang" className="py-20 md:py-28 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

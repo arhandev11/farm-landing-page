@@ -1,8 +1,11 @@
-import { siteConfig } from "@/lib/content";
 import { MessageCircle } from "lucide-react";
 
-export default function WhatsAppButton() {
-  const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=Halo%20Teras%20Farm,%20saya%20ingin%20bertanya%20tentang...`;
+interface WhatsAppButtonProps {
+  whatsapp: string;
+}
+
+export default function WhatsAppButton({ whatsapp }: WhatsAppButtonProps) {
+  const whatsappUrl = `https://wa.me/${whatsapp}?text=Halo%20Teras%20Farm,%20saya%20ingin%20bertanya%20tentang...`;
 
   return (
     <a

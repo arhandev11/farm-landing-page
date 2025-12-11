@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { howItWorks } from "@/lib/content";
+import { HowItWorksStep } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -30,7 +30,14 @@ const iconMap: Record<string, LucideIcon> = {
   Truck,
 };
 
-export default function HowItWorks() {
+interface HowItWorksProps {
+  howItWorks: {
+    petambak: HowItWorksStep[];
+    pembeli: HowItWorksStep[];
+  };
+}
+
+export default function HowItWorks({ howItWorks }: HowItWorksProps) {
   const [activeTab, setActiveTab] = useState<"petambak" | "pembeli">("petambak");
 
   const steps = howItWorks[activeTab];

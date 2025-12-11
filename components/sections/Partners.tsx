@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { testimonials } from "@/lib/content";
+import { Testimonial } from "@/lib/queries";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, MapPin, Package, Quote, Users } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +12,11 @@ const stats = [
   { icon: Package, value: "1000+", label: "Ton/Bulan" },
 ];
 
-export default function Partners() {
+interface PartnersProps {
+  testimonials: Testimonial[];
+}
+
+export default function Partners({ testimonials }: PartnersProps) {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const nextTestimonial = () => {
@@ -88,7 +92,7 @@ export default function Partners() {
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-10 left-20 bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10"
+            className="absolute top-10 left-20 glass-dark rounded-xl p-4"
           >
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-teal rounded-full animate-pulse shadow-[0_0_10px_#00B4D8]" />
@@ -99,7 +103,7 @@ export default function Partners() {
            <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-10 right-20 bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10"
+            className="absolute bottom-10 right-20 glass-dark rounded-xl p-4"
           >
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-teal rounded-full animate-pulse shadow-[0_0_10px_#00B4D8]" />

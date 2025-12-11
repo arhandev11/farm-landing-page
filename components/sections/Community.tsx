@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { communityPrograms, siteConfig } from "@/lib/content";
+import { CommunityProgram } from "@/lib/queries";
 import { motion } from "framer-motion";
 import { GraduationCap, Handshake, Heart, LucideIcon, MessageSquare, Shield, Users } from "lucide-react";
 import Image from "next/image";
@@ -31,8 +31,12 @@ const communityValues = [
   },
 ];
 
-export default function Community() {
-  const whatsappGroupUrl = `https://wa.me/${siteConfig.whatsapp}?text=Halo%20Teras%20Farm,%20saya%20ingin%20bergabung%20dengan%20komunitas%20petambak`;
+interface CommunityProps {
+  communityPrograms: CommunityProgram[];
+}
+
+export default function Community({ communityPrograms }: CommunityProps) {
+  const whatsappGroupUrl = `https://wa.me/6281234567890?text=Halo%20Teras%20Farm,%20saya%20ingin%20bergabung%20dengan%20komunitas%20petambak`;
 
   return (
     <section id="komunitas" className="py-20 md:py-28 bg-gradient-to-b from-gray-50 to-white">
@@ -92,7 +96,7 @@ export default function Community() {
               {communityPrograms.map((program, index) => {
                 const IconComponent = iconMap[program.icon];
                 return (
-                  <Card key={program.id} className="border-gray-100 hover:border-ocean-blue/30 shadow-sm hover:shadow-md transition-all duration-300">
+                  <Card key={program.id} className="border-gray-100 card-hover">
                     <CardContent className="p-5 flex gap-4 items-start">
                       <div className="w-12 h-12 bg-gradient-to-br from-ocean-blue/10 to-teal/10 rounded-xl flex items-center justify-center shrink-0">
                         {IconComponent && <IconComponent className="text-ocean-blue" size={24} />}

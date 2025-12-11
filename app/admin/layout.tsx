@@ -7,6 +7,7 @@ import {
     HelpCircle,
     Home,
     LayoutDashboard,
+    LogOut,
     MessageSquare,
     Package,
     Quote,
@@ -17,7 +18,7 @@ import {
     Workflow,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const sidebarItems = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -39,6 +40,17 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/auth/logout", { method: "POST" });
+      router.push("/admin/login");
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
@@ -80,7 +92,7 @@ export default function AdminLayout({
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/10">
+        <div className="p-4 border-t border-white/10 space-y-1">
           <Link
             href="/"
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all"
@@ -88,6 +100,13 @@ export default function AdminLayout({
             <MessageSquare className="w-5 h-5" />
             View Website
           </Link>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-red-400 hover:bg-white/5 transition-all"
+          >
+            <LogOut className="w-5 h-5" />
+            Logout
+          </button>
         </div>
       </aside>
 

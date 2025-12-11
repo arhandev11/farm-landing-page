@@ -1,7 +1,12 @@
-import { navLinks, siteConfig } from "@/lib/content";
+import { NavLink, SiteConfig } from "@/lib/queries";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 
-export default function Footer() {
+interface FooterProps {
+  siteConfig: SiteConfig;
+  navLinks: NavLink[];
+}
+
+export default function Footer({ siteConfig, navLinks }: FooterProps) {
   return (
     <footer className="bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
@@ -69,7 +74,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Phone size={18} className="text-teal mt-0.5 shrink-0" />
-                <span className="text-gray-300 text-sm">+62 812-3456-7890</span>
+                <span className="text-gray-300 text-sm">+{siteConfig.whatsapp}</span>
               </li>
               <li className="flex items-start gap-3">
                 <Mail size={18} className="text-teal mt-0.5 shrink-0" />
@@ -84,7 +89,7 @@ export default function Footer() {
             {/* Social */}
             <div className="flex gap-4 mt-6">
               <a
-                href={siteConfig.social.instagram}
+                href={siteConfig.instagram || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-teal transition-colors"
@@ -92,7 +97,7 @@ export default function Footer() {
                 <Instagram size={20} />
               </a>
               <a
-                href={siteConfig.social.facebook}
+                href={siteConfig.facebook || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-teal transition-colors"

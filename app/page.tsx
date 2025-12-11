@@ -11,25 +11,65 @@ import HowItWorks from "@/components/sections/HowItWorks";
 import Partners from "@/components/sections/Partners";
 import Products from "@/components/sections/Products";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
+import {
+    getBlogArticles,
+    getCommunityPrograms,
+    getCoreValues,
+    getFAQs,
+    getFeatures,
+    getHeroStats,
+    getHowItWorks,
+    getNavLinks,
+    getProducts,
+    getSiteConfig,
+    getTestimonials,
+} from "@/lib/queries";
 
-export default function Home() {
+export default async function Home() {
+  // Fetch all content from database (with fallback to static content)
+  const [
+    siteConfig,
+    navLinks,
+    heroStats,
+    coreValues,
+    howItWorks,
+    features,
+    products,
+    testimonials,
+    communityPrograms,
+    blogArticles,
+    faqData,
+  ] = await Promise.all([
+    getSiteConfig(),
+    getNavLinks(),
+    getHeroStats(),
+    getCoreValues(),
+    getHowItWorks(),
+    getFeatures(),
+    getProducts(),
+    getTestimonials(),
+    getCommunityPrograms(),
+    getBlogArticles({ limit: 4 }),
+    getFAQs(),
+  ]);
+
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <Header siteConfig={siteConfig} navLinks={navLinks} />
       <main>
-        <Hero />
-        <About />
-        <HowItWorks />
-        <WhyChooseUs />
-        <Products />
-        <Partners />
-        <Community />
-        <Blog />
-        <FAQ />
-        <Contact />
+        <Hero siteConfig={siteConfig} heroStats={heroStats} />
+        <About coreValues={coreValues} />
+        <HowItWorks howItWorks={howItWorks} />
+        <WhyChooseUs features={features} />
+        <Products products={products} siteConfig={siteConfig} />
+        <Partners testimonials={testimonials} />
+        <Community communityPrograms={communityPrograms} />
+        <Blog articles={blogArticles} />
+        <FAQ faqData={faqData} />
+        <Contact siteConfig={siteConfig} />
       </main>
-      <Footer />
-      <WhatsAppButton />
+      <Footer siteConfig={siteConfig} navLinks={navLinks} />
+      <WhatsAppButton whatsapp={siteConfig.whatsapp} />
     </div>
   );
 }

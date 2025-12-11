@@ -5,12 +5,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { siteConfig } from "@/lib/content";
+import { SiteConfig } from "@/lib/queries";
 import { motion } from "framer-motion";
 import { Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-export default function Contact() {
+interface ContactProps {
+  siteConfig: SiteConfig;
+}
+
+export default function Contact({ siteConfig }: ContactProps) {
   const [formType, setFormType] = useState<"petambak" | "pembeli">("petambak");
   const [formData, setFormData] = useState({
     name: "",

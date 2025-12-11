@@ -24,7 +24,6 @@ export const navLinks = [
   { name: "Komunitas", href: "#komunitas" },
   { name: "Blog", href: "#blog" },
   { name: "FAQ", href: "#faq" },
-  { name: "Kontak", href: "#kontak" },
 ];
 
 export const heroStats = [

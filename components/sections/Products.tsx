@@ -4,16 +4,21 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { products, siteConfig } from "@/lib/content";
+import { Product, SiteConfig } from "@/lib/queries";
 import { AnimatePresence, motion } from "framer-motion";
 import { Calendar, Check, MessageCircle, Ruler } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function Products() {
-  const [activeProduct, setActiveProduct] = useState(products[0].id);
+interface ProductsProps {
+  products: Product[];
+  siteConfig: SiteConfig;
+}
 
-  const currentProduct = products.find((p) => p.id === activeProduct)!;
+export default function Products({ products, siteConfig }: ProductsProps) {
+  const [activeProduct, setActiveProduct] = useState(products[0]?.id || "vaname");
+
+  const currentProduct = products.find((p) => p.id === activeProduct) || products[0];
 
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=Halo%20Teras%20Farm,%20saya%20ingin%20menanyakan%20harga%20${currentProduct.name}`;
   
@@ -62,7 +67,7 @@ export default function Products() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
           >
-            <Card className="bg-white rounded-[2rem] shadow-xl overflow-hidden border-0">
+            <Card className="bg-white rounded-[2rem] overflow-hidden border-0 card-hover">
               <div className="grid lg:grid-cols-2">
                 {/* Image Side */}
                 <div className="relative bg-gradient-to-br from-ocean-blue/5 to-teal/5 p-8 lg:p-12 flex items-center justify-center overflow-hidden">

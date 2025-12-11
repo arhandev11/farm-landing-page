@@ -2,13 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { navLinks, siteConfig } from "@/lib/content";
+import { NavLink, SiteConfig } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 
-export default function Header() {
+interface HeaderProps {
+  siteConfig: SiteConfig;
+  navLinks: NavLink[];
+}
+
+export default function Header({ siteConfig, navLinks }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
 
@@ -22,10 +27,10 @@ export default function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "sticky top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out",
         isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-md py-2"
-          : "bg-transparent py-4 md:py-6"
+          ? "glass py-3"
+          : "bg-transparent py-6"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

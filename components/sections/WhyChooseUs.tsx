@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { features } from "@/lib/content";
+import { Feature } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Award, BadgePercent, LucideIcon, MapPin, MessageCircle, Wallet } from "lucide-react";
@@ -30,7 +30,11 @@ const item = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-export default function WhyChooseUs() {
+interface WhyChooseUsProps {
+  features: Feature[];
+}
+
+export default function WhyChooseUs({ features }: WhyChooseUsProps) {
   return (
     <section id="keunggulan" className="py-20 md:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,9 +75,9 @@ export default function WhyChooseUs() {
                 variants={item}
                 className={cn(isLarge ? "md:col-span-2 lg:col-span-1" : "")}
               >
-                <Card
+                  <Card
                   className={cn(
-                    "h-full overflow-hidden border-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl",
+                    "h-full overflow-hidden border-0 card-hover",
                     index === 0
                       ? "bg-gradient-to-br from-ocean-blue to-teal text-white shadow-lg"
                       : "bg-gray-50 hover:bg-white"

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { heroStats, siteConfig } from "@/lib/content";
+import { HeroStat, SiteConfig } from "@/lib/queries";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
@@ -27,16 +27,21 @@ const itemVariants = {
   },
 };
 
-export default function Hero() {
+interface HeroProps {
+  siteConfig: SiteConfig;
+  heroStats: HeroStat[];
+}
+
+export default function Hero({ siteConfig, heroStats }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-ocean-blue/5 via-white to-teal/5 lg:pt-0 pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-ocean-blue/5 via-white to-teal/5"
     >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute top-20 left-10 w-64 h-64 bg-teal/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-ocean-blue/20 rounded-full blur-3xl" />
+      <div className="absolute inset-0 opacity-40 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-teal/20 rounded-full blur-[100px] animate-pulse duration-[4s]" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-ocean-blue/20 rounded-full blur-[120px] animate-pulse duration-[7s]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">

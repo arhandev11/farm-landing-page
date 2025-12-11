@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { BlogArticle } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Calendar, Lightbulb, LucideIcon, Newspaper, TrendingUp } from "lucide-react";
@@ -55,9 +56,44 @@ const articles = [
   },
 ];
 
-export default function Blog() {
-  const featuredArticle = articles.find((a) => a.featured);
-  const otherArticles = articles.filter((a) => !a.featured);
+interface BlogProps {
+  articles: BlogArticle[];
+}
+
+export default function Blog({ articles }: BlogProps) {
+  // Use passed articles or empty array
+  const allArticles = articles.length > 0 ? articles : [
+    {
+      id: 1,
+      title: "Panduan Lengkap Budidaya Udang Vaname untuk Pemula",
+      excerpt: "Pelajari langkah-langkah dasar memulai budidaya udang vaname dari persiapan tambak hingga panen.",
+      category: "budidaya",
+      date: "20 Nov 2024",
+      readTime: "8 min",
+      featured: true,
+    },
+    {
+      id: 2,
+      title: "5 Tips Menjaga Kualitas Air Tambak di Musim Hujan",
+      excerpt: "Musim hujan bisa menjadi tantangan bagi petambak. Simak tips menjaga kualitas air tambak Anda.",
+      category: "tips",
+      date: "18 Nov 2024",
+      readTime: "5 min",
+      featured: false,
+    },
+    {
+      id: 3,
+      title: "Update Harga Udang Vaname November 2024",
+      excerpt: "Pantau perkembangan harga udang vaname di berbagai daerah Indonesia bulan ini.",
+      category: "harga",
+      date: "15 Nov 2024",
+      readTime: "3 min",
+      featured: false,
+    },
+  ];
+
+  const featuredArticle = allArticles.find((a) => a.featured);
+  const otherArticles = allArticles.filter((a) => !a.featured);
 
   return (
     <section id="blog" className="py-20 md:py-28 bg-white">
@@ -104,7 +140,7 @@ export default function Blog() {
              transition={{ duration: 0.6 }}
              className="mb-16"
           >
-            <Card className="overflow-hidden border-0 shadow-lg rounded-[2rem] bg-white group cursor-pointer hover:shadow-xl transition-all duration-300">
+            <Card className="overflow-hidden border-0 shadow-lg rounded-[2rem] bg-white group cursor-pointer card-hover">
               <div className="grid lg:grid-cols-2 gap-0">
                 {/* Image */}
                 <div className="relative aspect-video lg:aspect-auto overflow-hidden">
@@ -166,7 +202,7 @@ export default function Blog() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
               >
-                <Card className="h-full border-gray-100 hover:border-ocean-blue/20 hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden group flex flex-col">
+                <Card className="h-full border-gray-100 card-hover rounded-2xl overflow-hidden group flex flex-col">
                   {/* Image Placeholder - fallback since we only generated 1 blog image */}
                   <div className="aspect-video bg-gradient-to-br from-ocean-blue/5 to-teal/5 flex items-center justify-center relative overflow-hidden">
                     <div className="absolute inset-0 bg-ocean-blue/5 group-hover:bg-ocean-blue/10 transition-colors" />
