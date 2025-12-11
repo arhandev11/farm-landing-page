@@ -10,7 +10,14 @@
     "db:generate": "bunx prisma generate",
     "db:push": "bunx prisma db push",
     "db:seed": "bunx prisma db seed",
-    "db:studio": "bunx prisma studio"
+    "db:studio": "bunx prisma studio",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop teras-farm",
+    "pm2:restart": "pm2 restart teras-farm",
+    "pm2:delete": "pm2 delete teras-farm",
+    "pm2:logs": "pm2 logs teras-farm",
+    "pm2:monit": "pm2 monit",
+    "deploy": "npm run build && npm run pm2:start"
   },
   "prisma": {
     "seed": "bun run prisma/seed.ts"
